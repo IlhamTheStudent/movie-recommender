@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rekomendasi Film</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a2e;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #ffcc00;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        input[type="text"] {
+            width: 70%;
+            padding: 12px;
+            border-radius: 5px;
+            border: 2px solid #ffcc00;
+            font-size: 1rem;
+            background-color: #fff;
+            color: #000;
+        }
+
+        button {
+            padding: 12px 20px;
+            background-color: #ff5733;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #ff2e00;
+        }
+
+        .error {
+            color: #ff4c4c;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .movie-list {
+            margin-top: 20px;
+        }
+
+        .movie {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .movie:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .movie h3 {
+            font-size: 1.5rem;
+            color: #ffcc00;
+        }
+
+        .movie h3 a {
+            text-decoration: none;
+            color: #ffcc00;
+            transition: color 0.3s ease;
+        }
+
+        .movie h3 a:hover {
+            color: #ff5733;
+        }
+
+        footer {
+            margin-top: 40px;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Rekomendasi Film Berdasarkan Keyword</h1>
+        
+        <form method="POST">
+            <input type="text" name="keyword" placeholder="Masukkan kata kunci..." value="{{ keyword }}">
+            <button type="submit">Cari</button>
+        </form>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        {% if recommendations %}
+            <div class="movie-list">
+                <h2>Hasil Rekomendasi:</h2>
+                {% for movie in recommendations %}
+                    <div class="movie">
+                        <h3><a href="{{ url_for('movie_detail', title=movie['title']) }}" target="_blank">{{ movie['title'] }}</a></h3>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Rekomendasi Film - Dibuat dengan ❤️</p>
+    </footer>
+</body>
+</html>
